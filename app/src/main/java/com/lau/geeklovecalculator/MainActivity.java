@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
@@ -16,10 +17,11 @@ public class MainActivity extends AppCompatActivity {
 
     private Spinner spinner;
     private ArrayAdapter<String> adapter;
-    private EditText fullname;
+    private EditText text;
     private String language, name;
     private Random rand = new Random();
-    private float percentage_love;
+    private int percentage_love;
+    private TextView result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,13 +36,24 @@ public class MainActivity extends AppCompatActivity {
 
         spinner.setAdapter(adapter);
 
-        fullname = (EditText) findViewById(R.id.person_name);
+        text = (EditText) findViewById(R.id.person_name);
+
+        result = (TextView) findViewById(R.id.result);
+        result.setText("");
     }
 
     public void calculate(View v){
 
         language = spinner.getSelectedItem().toString();
-        name = fullname.getText().toString();
+        name = text.getText().toString();
+
+        percentage_love = (int) (rand.nextFloat()*100);
+
+        result.setText(""+percentage_love+" %");
+
+        text.setVisibility(View.GONE);
+        spinner.setVisibility(View.GONE);
+
 
     }
 }
