@@ -2,15 +2,17 @@ package com.lau.geeklovecalculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TableLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Locale;
 import java.util.Random;
@@ -22,10 +24,13 @@ public class MainActivity extends AppCompatActivity {
     private EditText text;
     private String language, name;
     private Random rand = new Random();
-    private int percentage_love;
+    private int percentage_love, i = 1;
     private TextView result;
-    ImageView img1;
-    ImageView logo;
+    private ImageView img1;
+    private ImageView logo;
+    private Button calculate;
+    private TableLayout table;
+    private String[] lang, score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,45 +55,72 @@ public class MainActivity extends AppCompatActivity {
         logo = (ImageView) findViewById(R.id.img2);
 
         logo.setTranslationY(-1500);
+
+        calculate = (Button) findViewById(R.id.submit);
+
+        table = (TableLayout) findViewById(R.id.results_table);
+
+        table.setVisibility(View.GONE);
+
+        lang = new String[10];
+        score = new String[10];
     }
 
-    public void calculate(View v){
+    public void submit(View v){
 
-        language = spinner.getSelectedItem().toString();
-        name = text.getText().toString();
+        if(i%2 != 0){
+            language = spinner.getSelectedItem().toString();
+            name = text.getText().toString();
 
-        percentage_love = (int) (rand.nextFloat()*100);
+            percentage_love = (int) (rand.nextFloat() * 100);
 
-        result.setText(""+percentage_love+" %");
+            result.setText("" + percentage_love + " %");
 
-        text.setVisibility(View.GONE);
-        spinner.setVisibility(View.GONE);
+            text.setVisibility(View.GONE);
+            spinner.setVisibility(View.GONE);
 
-        Log.i("Logo:", language);
+            lang[i] = language;
+            score[i] = ;
 
-        switch(language.toLowerCase(Locale.ROOT)){
+            switch (language.toLowerCase(Locale.ROOT)) {
 
-            case "java":
-                logo.setImageResource(R.drawable.java);
-                break;
-            case "python":
-                logo.setImageResource(R.drawable.python);
-                break;
-            case "c":
-                logo.setImageResource(R.drawable.c);
-                break;
-            case "r":
-                logo.setImageResource(R.drawable.r);
-                break;
-            case "sql":
-                logo.setImageResource(R.drawable.sql);
-                break;
-            case "php":
-                logo.setImageResource(R.drawable.php);
-                break;
+                case "java":
+                    logo.setImageResource(R.drawable.java);
+                    break;
+                case "python":
+                    logo.setImageResource(R.drawable.python);
+                    break;
+                case "c":
+                    logo.setImageResource(R.drawable.c);
+                    break;
+                case "r":
+                    logo.setImageResource(R.drawable.javascript);
+                    break;
+                case "sql":
+                    logo.setImageResource(R.drawable.sql);
+                    break;
+                case "php":
+                    logo.setImageResource(R.drawable.php);
+                    break;
+                case "javascript":
+                    logo.setImageResource(R.drawable.javascript);
+                    break;
+            }
+            logo.animate().translationYBy(1500).rotation(3600).setDuration(600);
+            calculate.setText("Play Again");
+            i++;
         }
-        logo.animate().translationYBy(1500).rotation(3600).setDuration(600);
+        else{
+            result.setText("");
+            logo.animate().translationYBy(-1500).rotation(3600).setDuration(600);
+            text.setVisibility(View.VISIBLE);
+            spinner.setVisibility(View.VISIBLE);
+            calculate.setText("Calculate");
+            i=1;
+        }
+    }
 
-
+    public void showResults(View v){
+        table.setVisibility(View.VISIBLE);
     }
 }
