@@ -22,6 +22,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Creating the variables
     private Spinner spinner;
     private ArrayAdapter<String> adapter;
     private EditText text;
@@ -39,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Initializing the variables
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -71,12 +74,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void submit(View v){
+        // Calculate button
 
-        if(i%2 != 0) {
+        if(i%2 != 0) {// If it is in home page we show the name and the language
             language = spinner.getSelectedItem().toString();
             name = text.getText().toString();
 
-            if (name.equalsIgnoreCase("")) {
+            if (name.equalsIgnoreCase("")) {// if the name box is empty
                 Toast toast = Toast.makeText(getApplicationContext(), "Please enter a name", Toast.LENGTH_LONG);
                 toast.show();
             } else {
@@ -109,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
                 table.addView(row);
 
-                switch (language.toLowerCase(Locale.ROOT)) {
+                switch (language.toLowerCase(Locale.ROOT)) {// checks the language to show the correct logo
 
                     case "java":
                         logo.setImageResource(R.drawable.java);
@@ -129,14 +133,17 @@ public class MainActivity extends AppCompatActivity {
                     case "javascript":
                         logo.setImageResource(R.drawable.javascript);
                         break;
+                    case "r":
+                        logo.setImageResource(R.drawable.r_logo);
+                        break;
                 }
 
                 logo.animate().translationYBy(3000).rotation(3600).setDuration(600);
-                calculate.setText("Play Again");
+                calculate.setText("Play Again");// we set the caluclate button to play again
                 i++;
             }
         }
-        else{
+        else{// if we are in the result page we need to return to the home page when the button is pressed
                 result.setText("");
                 logo.setImageDrawable(null);
                 logo.setTranslationY(-3000);
@@ -149,8 +156,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showResults(View view){
+        // This button show the results of all his searches
 
-        if(j == 1) {
+        if(j == 1) { // if it is not pressed we go to the results
             table.setVisibility(View.VISIBLE);
             j++;
             result.setText("");
@@ -160,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             results.setText("Back");
             calculate.setVisibility(View.GONE);
         }
-        else{
+        else{// if pressed we go to the last page we visited the if statements make sure to go back to the pages we were at
             if(i%2 == 0){
                 result.setText("" + percentage_love + " %");
             }
